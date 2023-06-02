@@ -1,10 +1,9 @@
-openapi: 3.1.0
+openapi: 3.0.0
 x-stoplight:
   id: a1lowzykezjb5
 info:
   title: Admission
   version: '1.0'
-  summary: Admission(SET)
   description: |-
     ### 1. But du service
     Ce service permet de gérer les établissements d'enseignement fréquentés.
