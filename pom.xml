@@ -76,9 +76,6 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-<!--                            <inputSpec>-->
-<!--                                ${project.basedir}/petstore.yaml-->
-<!--                            </inputSpec>-->
                             <inputSpec>
                                 ${project.basedir}/admission/AEL-ServiceEtablissementEnseignementFrequente.yaml
                             </inputSpec>
