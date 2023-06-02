@@ -1,0 +1,304 @@
+openapi: 3.1.0
+x-stoplight:
+  id: a1lowzykezjb5
+info:
+  title: Admission
+  version: '1.0'
+  summary: Admission(SET)
+  description: |-
+    ### 1. But du service
+    Ce service permet de gérer les établissements d'enseignement fréquentés.
+
+    ### 2. Description sommaire du contexte
+    Ce service fournit un ensemble d'opérations qui permettent d'accéder aux informations de l'établissement d'enseignement fréquenté.
+
+    ### 3. Fréquence d'appel
+    L'information sur l'établissement d'enseignement fréquenté est recueillie à la demande.
+
+    ### 4. Source des données
+    Les informations relatives à l'établissement d'enseignement fréquenté se trouvent dans la table ETABL_ENSGN_FREQN de la base de données Admission.
+
+    ### 5. Volume de production
+    S/O
+
+    ### 6. Cible
+    [ServiceEtablissementEnseignementFrequente](https://dev.monportail.ulaval.ca/sites/set/tronc-SNAPSHOT/set-apis/apidocs/ca/ulaval/gde/set/apis/admission/candidats/etudesanterieures/etablissementsenseignementfrequentes/ServiceEtablissementEnseignementFrequente.html) (javadoc).
+
+    ### 7. Conditions préalables
+    S/O
+  contact:
+    name: Isabelle Filiatrault
+    email: isabelle.filiatrault@dti.ulaval.ca
+servers:
+  - url: 'https://monportail.test.ulaval.ca/etudes/v1'
+    description: test
+  - url: 'https://monportail.testpr.ulaval.ca/etudes/v1'
+    description: testpr
+  - url: 'https://monportail.app.ulaval.ca/etudes/v1'
+    description: app
+  - url: 'https://monportail.apppr.ulaval.ca/etudes/v1'
+    description: apppr
+  - url: 'https://monportail.ulaval.ca/etudes/v1'
+    description: prod
+paths:
+  /admission/candidats/etudesanterieures/etablissementsenseignementfrequentes:
+    parameters: []
+    get:
+      summary: rechercherEtablissementsEnseignementFrequentes
+      operationId: rechercherEtablissementsEnseignementFrequentes
+      responses:
+        '200':
+          description: Le résultat de la recherche
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resultats:
+                    type: array
+                    x-stoplight:
+                      id: j6whbfy0rf5pg
+                    items:
+                      $ref: '#/components/schemas/EtablissementEnseignementFrequente'
+                      x-stoplight:
+                        id: gev6f9uzvoad4
+                  references:
+                    type: array
+                    x-stoplight:
+                      id: 0cnw3dfeqd68l
+                    items: {}
+                required:
+                  - resultats
+                  - references
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+          in: query
+          name: idDossierAdmission
+          description: Identifiant d'établissement d'enseignement fréquenté
+          required: true
+        - $ref: '#/components/parameters/references'
+      description: |-
+        - Aucune règle à vérifier
+        - Sélectionner le ou les occurrences dans la table établissement enseignement fréquenté de l'Admission pour un candidat
+      tags:
+        - candidats/etudesanterieures
+    post:
+      summary: creerEtablissementEnseignementFrequente
+      operationId: post-admission-candidats-etudesanterieures-etablissementsenseignementfrequentes
+      responses:
+        '200':
+          description: L'établissement d'enseignement fréquenté créé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resultat:
+                    $ref: '#/components/schemas/EtablissementEnseignementFrequente'
+                    x-stoplight:
+                      id: eprck2zd21ueq
+                    description: L'établissement d'enseignement fréquenté créé
+                required:
+                  - resultat
+      description: |-
+        - Vérifier l'ensemble des règles (sauf 13, 14 et 15) décrites dans la section Règles fonctionnelles
+        - Si le dossier n'est pas à confirmer (indicateur "Doit confirmer" à 'N') alors rendre le dossier à confirmer (indicateur "Doit confirmer" à 'O')
+        - Créer l’établissement d'enseignement fréquenté dans l'Admission.
+        - Déterminer l'indicateur de déclaration du candidat modifiée (Opération "Déterminer l'indicateur de déclaration du candidat modifiée" du service ServiceDossierAdmission).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EtablissementEnseignementFrequente'
+              description: JERONIMO
+        description: |-
+          L'établissement d'enseignement fréquenté à créer.
+
+          Si l'établissement n'a aucune FormationSuivie, la confirmation du DossierAdmission sera demandée.
+
+          Validations:
+          - etablissementEnseignementFrequente non null
+          - etablissementEnseignementFrequente.idDossierAdmission non null
+          - etablissementEnseignementFrequente.choixEtablissementEnseignement non null
+          - etablissementEnseignementFrequente.choixEtablissementEnseignement.idEtablissement ou etablissementEnseignementFrequente.choixEtablissementEnseignement.nomEtablissementEnseignement non null (mutuellement exclusif)
+          - si etablissementEnseignementFrequente.choixEtablissementEnseignement.idEtablissement non null :
+          - etablissementEnseignementFrequente.choixEtablissementEnseignement.codePays est null
+          - etablissementEnseignementFrequente.choixEtablissementEnseignement.codeProvinceEtat est null
+          - si etablissementEnseignementFrequente.choixEtablissementEnseignement.nomEtablissementEnseignement non null :
+          - etablissementEnseignementFrequente.nomEtablissementEnseignement taille maximale de 50 caractères
+          - etablissementEnseignementFrequente.choixEtablissementEnseignement.codePays est non null
+          - etablissementEnseignementFrequente.choixEtablissementEnseignement.codeProvinceEtat est non null
+      tags:
+        - candidats/etudesanterieures
+  '/admission/candidats/etudesanterieures/etablissementsenseignementfrequentes/{idetablissementenseignementfrequente}':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: idetablissementenseignementfrequente
+        in: path
+        required: true
+        description: L'identifiant de l'établissement d'enseignement fréquenté
+    get:
+      summary: obtenirEtablissementEnseignementFrequente
+      tags:
+        - candidats/etudesanterieures
+      responses:
+        '200':
+          description: L'établissement d'enseignement fréquenté
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EtablissementEnseignementFrequente'
+      operationId: get-admission-candidats-etudesanterieures-etablissementsenseignementfrequentes-idetablissementenseignementfrequente
+      description: |-
+        Obtenir un établissement d'enseignement fréquenté.
+
+        Le service supporte le chargement des ressources référencées.
+      parameters:
+        - $ref: '#/components/parameters/references'
+components:
+  schemas:
+    EtablissementEnseignementFrequente:
+      title: EtablissementEnseignementFrequente
+      x-stoplight:
+        id: 252m3g6m0dd43
+      x-tags:
+        - entite
+      type: object
+      description: Représente les établissements d'enseignement fréquentés de l'individu.
+      properties:
+        idEtablissementEnseignementFrequente:
+          type: string
+          format: uuid
+          x-stoplight:
+            id: xfxjjbf0xvse2
+          description: L'identifiant de l'établissement d'enseignement fréquenté.
+          readOnly: true
+        idDossierAdmission:
+          type: string
+          x-stoplight:
+            id: 3vawanjsov64r
+          format: uuid
+          description: Identifiant du dossier d'admission.
+        choixEtablissementEnseignement:
+          type: object
+          x-stoplight:
+            id: ltwgm0gh74v2p
+          description: |-
+            Définition d'un etablissement d'enseignement fournit par le candidat à l'admission.
+
+            Le choix représente :
+            - soit un établissement d'enseignement définit dans la système de gestion des études
+            - soit une description de l'établissement d'enseignement fournie par le candidat à l'admission
+
+            Lorsque le code de l'établissement est présent, tous les autres champs doivent être absents.
+
+            Lorsque le nom de l'établissement est présent, 
+            le code de l'établissement doit être absent.
+
+
+            Le code de pays est obligatoire.
+            Le code de la province ou état est optionnel.
+            L'indicateur d'établissement de niveau universitare est obligatoire.
+          required:
+            - idEtablissement
+            - nomEtablissementEnseignement
+            - codePays
+            - estEtablissementUniversitaire
+          properties:
+            idEtablissement:
+              type: string
+              x-stoplight:
+                id: iywo5fc1z5gre
+              format: uuid
+              description: L'identifiant de l'établissement dans SET
+            nomEtablissementEnseignement:
+              type: string
+              x-stoplight:
+                id: fsat9pm7s70em
+              description: Nom de l'établissement d'enseignement
+              example: Universté Sherbrooke
+            codePays:
+              type: string
+              x-stoplight:
+                id: n2yidob65tleg
+              description: Code de pays du RIC
+              minLength: 3
+              maxLength: 3
+            codeProvinceEtat:
+              type: string
+              x-stoplight:
+                id: ph5xz8djo952v
+              minLength: 2
+              maxLength: 2
+              description: Code de la province ou état du RIC
+            estEtablissementUniversitaire:
+              type: boolean
+              x-stoplight:
+                id: g2adz9rszlqwz
+              description: Si l'établissement est de niveau universitaire
+              readOnly: true
+        idsFormationsSuivies:
+          type: array
+          x-stoplight:
+            id: punwfl1y9jk1e
+          uniqueItems: true
+          description: L'ensemble des formations suivies par le candidat dans cet établissement
+          items:
+            x-stoplight:
+              id: vthc6z4tt7152
+            type: string
+            format: uuid
+        version:
+          type: integer
+          x-stoplight:
+            id: dcr6eeh3dfz6l
+          example: 3
+          description: La version de l'etablissement d'enseignement
+      required:
+        - idEtablissementEnseignementFrequente
+        - idDossierAdmission
+        - choixEtablissementEnseignement
+        - idsFormationsSuivies
+        - version
+  securitySchemes: {}
+  parameters:
+    references:
+      name: references
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - sessions
+            - sessions-resume
+            - calendriersadmission
+            - dossiersadmission
+            - questionsspecifiques
+            - demandesadmission
+            - fraisadmissiondemande
+            - programmesadmission
+            - etablissementsenseignementfrequentes
+            - etablissementenseignement
+            - formationssuivies
+            - typesformationsuivies
+            - niveauxformationsuivies
+            - choixprogramme
+            - decisionchoixprogramme
+            - reponseoffreadmission
+            - versionprogramme
+            - documentadmissiondossier
+            - documentexigechoixprogramme
+            - site
+            - campus
+            - etatsyncdocumentexige
+            - sectioncours
+            - dossieraccommodement
+        uniqueItems: true
+      description: Contient les noms de toutes les références aux ressources pouvant être chargées à partir d'une ressource principale.  Sert de valeur pour le paramètre "references" dans les requêtes obtenir et rechercher.
+      explode: true
