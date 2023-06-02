@@ -76,7 +76,7 @@ paths:
           in: query
           name: idDossierAdmission
           description: Identifiant d'établissement d'enseignement fréquenté
-          required: true
+          required: false
         - $ref: '#/components/parameters/references'
       description: |-
         - Aucune règle à vérifier
