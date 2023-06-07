@@ -67,11 +67,16 @@
     <build>
         <plugins>
             <plugin>
+                <!-- Documentation de openapi-generator-maven-plugin :
+                 https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin -->
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>6.6.0</version>
                 <executions>
                     <execution>
+                        <!-- Documentation du générateur Spring :
+                        https://openapi-generator.tech/docs/generators/spring/ -->
+                        <id>generer-server-spring</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -80,14 +85,39 @@
                                 ${project.basedir}/admission/AEL-ServiceEtablissementEnseignementFrequente.yaml
                             </inputSpec>
                             <generatorName>spring</generatorName>
-                            <apiPackage>ca.ulaval.set.apipoc.restapi.api</apiPackage>
-                            <modelPackage>ca.ulaval.set.apipoc.restapi.model</modelPackage>
+<!--                            <apiPackage>ca.ulaval.set.apipoc.restapi.api</apiPackage>-->
+<!--                            <modelPackage>ca.ulaval.set.apipoc.restapi.model</modelPackage>-->
+<!--                            <invokerPackage>ca.ulaval.set.apipoc.restapi.invoker</invokerPackage>-->
+<!--                            <configPackage>ca.ulaval.set.apipoc.restapi.config</configPackage>-->
+<!--                            <packageName>ca.ulaval.set.apipoc.restapi</packageName>-->
                             <supportingFilesToGenerate>
-                                ApiUtil.java
+                                ApiUtil.java,RFC3339DateFormat.java,HomeController.java,SpringDocConfiguration.java,application.properties,openapi.yaml
                             </supportingFilesToGenerate>
                             <configOptions>
                                 <delegatePattern>true</delegatePattern>
+                                <documentationProvider>springdoc</documentationProvider>
+                                <basePackage>ca.ulaval.set.apipoc.restapi</basePackage>
+                                <apiPackage>ca.ulaval.set.apipoc.restapi.api</apiPackage>
+                                <modelPackage>ca.ulaval.set.apipoc.restapi.model</modelPackage>
+<!--                                                            <invokerPackage>ca.ulaval.set.apipoc.restapi.invoker</invokerPackage>-->
+                                <configPackage>ca.ulaval.set.apipoc.restapi.config</configPackage>
                             </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Documentation du générateur Spring :
+                        https://openapi-generator.tech/docs/generators/spring/ -->
+                        <id>generer-client-typescript</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/admission/AEL-ServiceEtablissementEnseignementFrequente.yaml
+                            </inputSpec>
+                            <generatorName>typescript-fetch</generatorName>
+                            <apiPackage>ca.ulaval.set.apipoc.restclient.api</apiPackage>
+                            <modelPackage>ca.ulaval.set.apipoc.restclient.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>
