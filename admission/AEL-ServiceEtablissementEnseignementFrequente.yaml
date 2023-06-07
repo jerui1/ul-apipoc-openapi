@@ -40,6 +40,36 @@ servers:
   - url: 'https://monportail.ulaval.ca/etudes/v1'
     description: prod
 paths:
+  /admission/candidats/dossieradmission:
+    put:
+      summary: Créer un dossier d'admission
+      requestBody:
+        required: true
+        content:
+          ni:
+            example: 1234567
+            schema:
+              type: string
+              minLength: 7
+              maxLength: 10
+              required: [ "ni" ]
+      responses:
+        200:
+          description: Dossier créé avec succès
+    get:
+      summary: Obtenir un dossier d'admission par ID ou NI
+      parameters:
+        - in: query
+          name: ni
+          schema:
+            type: string
+      responses:
+        200:
+          description: Le dossier d'admission demandé
+          content:
+            plain/text:
+              schema:
+                type: string
   /admission/candidats/etudesanterieures/etablissementsenseignementfrequentes:
     parameters: []
     get:
@@ -103,6 +133,7 @@ paths:
                 required:
                   - resultat
       description: |-
+        Créer un établissement d'enseignement fréquenté :
         - Vérifier l'ensemble des règles (sauf 13, 14 et 15) décrites dans la section Règles fonctionnelles
         - Si le dossier n'est pas à confirmer (indicateur "Doit confirmer" à 'N') alors rendre le dossier à confirmer (indicateur "Doit confirmer" à 'O')
         - Créer l’établissement d'enseignement fréquenté dans l'Admission.
@@ -261,3 +292,4 @@ components:
         - idsFormationsSuivies
         - version
   securitySchemes: {}
+
