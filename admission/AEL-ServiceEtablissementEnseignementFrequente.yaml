@@ -61,14 +61,8 @@ paths:
                       $ref: '#/components/schemas/EtablissementEnseignementFrequente'
                       x-stoplight:
                         id: gev6f9uzvoad4
-                  references:
-                    type: array
-                    x-stoplight:
-                      id: 0cnw3dfeqd68l
-                    items: {}
                 required:
                   - resultats
-                  - references
       parameters:
         - schema:
             type: string
@@ -77,8 +71,15 @@ paths:
           name: idDossierAdmission
           description: Identifiant d'établissement d'enseignement fréquenté
           required: false
-        - $ref: '#/components/parameters/references'
+        - schema:
+            type: string
+            minLength: 2
+            maxLength: 2
+          in: query
+          name: codePays
+          description: Le code pays de l'établissement
       description: |-
+        Recherche
         - Aucune règle à vérifier
         - Sélectionner le ou les occurrences dans la table établissement enseignement fréquenté de l'Admission pour un candidat
       tags:
@@ -154,10 +155,6 @@ paths:
       operationId: get-admission-candidats-etudesanterieures-etablissementsenseignementfrequentes-idetablissementenseignementfrequente
       description: |-
         Obtenir un établissement d'enseignement fréquenté.
-
-        Le service supporte le chargement des ressources référencées.
-      parameters:
-        - $ref: '#/components/parameters/references'
 components:
   schemas:
     EtablissementEnseignementFrequente:
@@ -264,40 +261,3 @@ components:
         - idsFormationsSuivies
         - version
   securitySchemes: {}
-  parameters:
-    references:
-      name: references
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-          enum:
-            - sessions
-            - sessions-resume
-            - calendriersadmission
-            - dossiersadmission
-            - questionsspecifiques
-            - demandesadmission
-            - fraisadmissiondemande
-            - programmesadmission
-            - etablissementsenseignementfrequentes
-            - etablissementenseignement
-            - formationssuivies
-            - typesformationsuivies
-            - niveauxformationsuivies
-            - choixprogramme
-            - decisionchoixprogramme
-            - reponseoffreadmission
-            - versionprogramme
-            - documentadmissiondossier
-            - documentexigechoixprogramme
-            - site
-            - campus
-            - etatsyncdocumentexige
-            - sectioncours
-            - dossieraccommodement
-        uniqueItems: true
-      description: Contient les noms de toutes les références aux ressources pouvant être chargées à partir d'une ressource principale.  Sert de valeur pour le paramètre "references" dans les requêtes obtenir et rechercher.
-      explode: true
