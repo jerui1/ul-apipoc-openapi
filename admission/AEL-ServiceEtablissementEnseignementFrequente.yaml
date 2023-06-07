@@ -53,7 +53,7 @@ paths:
                 ni:
                   type: string
       responses:
-        200:
+        '200':
           description: Dossier créé avec succès
     get:
       summary: Obtenir un dossier d'admission par ID ou NI
@@ -63,7 +63,7 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        '200':
           description: Le dossier d'admission demandé
           content:
             plain/text:
@@ -118,7 +118,7 @@ paths:
       operationId: post-admission-candidats-etudesanterieures-etablissementsenseignementfrequentes
       responses:
         '200':
-          description: L'établissement d'enseignement fréquenté créé :-)
+          description: 'L''établissement d''enseignement fréquenté créé :-)'
           content:
             application/json:
               schema:
@@ -183,8 +183,35 @@ paths:
               schema:
                 $ref: '#/components/schemas/EtablissementEnseignementFrequente'
       operationId: get-admission-candidats-etudesanterieures-etablissementsenseignementfrequentes-idetablissementenseignementfrequente
-      description: |-
-        Obtenir un établissement d'enseignement fréquenté.
+      description: Obtenir un établissement d'enseignement fréquenté.
+  /admission/etablissementenseignement:
+    put:
+      summary: Créer un établissement d'enseignement
+      tags: []
+      responses: {}
+      operationId: put-admission-etablissementenseignement
+      description: Ajouter un etablissement d'enseignement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nomEtablissementEnseignement:
+                  type: string
+                  x-stoplight:
+                    id: rzny11i60dstl
+                  minLength: 2
+                codePays:
+                  type: string
+                  x-stoplight:
+                    id: my1dd04vtj7hq
+                  minLength: 2
+                  maxLength: 2
+              required:
+                - nomEtablissementEnseignement
+                - codePays
+        description: Les informations nécessaires pour la création.
 components:
   schemas:
     EtablissementEnseignementFrequente:
@@ -290,5 +317,25 @@ components:
         - choixEtablissementEnseignement
         - idsFormationsSuivies
         - version
+    EtablissementEnseignement:
+      title: EtablissementEnseignement
+      x-stoplight:
+        id: dzf1ras2i54ps
+      type: object
+      properties:
+        idEtablissement:
+          type: string
+          x-stoplight:
+            id: yjp4g16o3z6jr
+        nomEtablissementEnseignement:
+          type: string
+          x-stoplight:
+            id: tdg5pzjk9rv1e
+        codePays:
+          type: string
+          x-stoplight:
+            id: 5mjznhparwxwk
+      required:
+        - nomEtablissementEnseignement
+        - codePays
   securitySchemes: {}
-
