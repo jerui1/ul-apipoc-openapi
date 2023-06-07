@@ -89,7 +89,7 @@ paths:
       operationId: post-admission-candidats-etudesanterieures-etablissementsenseignementfrequentes
       responses:
         '200':
-          description: L'établissement d'enseignement fréquenté créé
+          description: L'établissement d'enseignement fréquenté créé :-)
           content:
             application/json:
               schema:
