@@ -46,13 +46,12 @@ paths:
       requestBody:
         required: true
         content:
-          ni:
-            example: 1234567
+          application/json:
             schema:
-              type: string
-              minLength: 7
-              maxLength: 10
-              required: [ "ni" ]
+              type: object
+              properties:
+                ni:
+                  type: string
       responses:
         200:
           description: Dossier créé avec succès
