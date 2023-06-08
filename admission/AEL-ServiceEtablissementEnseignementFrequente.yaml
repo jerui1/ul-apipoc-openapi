@@ -71,7 +71,7 @@ paths:
         '200':
           description: Le dossier d'admission demandé
           content:
-            plain/text:
+            application/json:
               schema:
                 type: array
                 items:
