@@ -234,6 +234,39 @@ paths:
                 items:
                   $ref: '#/components/schemas/EtablissementEnseignement'
       description: Rechercher des établissements d'enseignement.
+  '/admission/candidats/dossieradmission/{iddossieradmission}/etablissementenseignementfrequente':
+    parameters:
+      - schema:
+          type: string
+        name: iddossieradmission
+        in: path
+        required: true
+    put:
+      summary: Créer un établissement d'enseignement fréquenté
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+      operationId: put-etablissementenseignementfrequente
+      description: Ajouter un établissement d'enseignement fréquenté dans un dossier d'admission.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idEtablissementEnseignement:
+                  type: string
+                  x-stoplight:
+                    id: xczdkfm5k2c6e
+                  format: uuid
+              required:
+                - idEtablissementEnseignement
 components:
   schemas:
     EtablissementEnseignementFrequente:
