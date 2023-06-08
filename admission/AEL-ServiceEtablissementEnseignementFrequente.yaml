@@ -55,6 +55,11 @@ paths:
       responses:
         '200':
           description: Dossier créé avec succès
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
     get:
       summary: Obtenir un dossier d'admission par ID ou NI
       parameters:
@@ -113,24 +118,17 @@ paths:
         - Sélectionner le ou les occurrences dans la table établissement enseignement fréquenté de l'Admission pour un candidat
       tags:
         - candidats/etudesanterieures
-    post:
+    put:
       summary: creerEtablissementEnseignementFrequente
-      operationId: post-admission-candidats-etudesanterieures-etablissementsenseignementfrequentes
+      operationId: put-admission-candidats-etudesanterieures-etablissementsenseignementfrequentes
       responses:
         '200':
           description: 'L''établissement d''enseignement fréquenté créé :-)'
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  resultat:
-                    $ref: '#/components/schemas/EtablissementEnseignementFrequente'
-                    x-stoplight:
-                      id: eprck2zd21ueq
-                    description: L'établissement d'enseignement fréquenté créé
-                required:
-                  - resultat
+                type: string
+                format: uuid
       description: |-
         Créer un établissement d'enseignement fréquenté :
         - Vérifier l'ensemble des règles (sauf 13, 14 et 15) décrites dans la section Règles fonctionnelles
@@ -188,7 +186,14 @@ paths:
     put:
       summary: Créer un établissement d'enseignement
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
       operationId: put-admission-etablissementenseignement
       description: Ajouter un etablissement d'enseignement
       requestBody:
