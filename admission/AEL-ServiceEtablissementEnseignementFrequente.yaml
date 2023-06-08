@@ -73,7 +73,11 @@ paths:
           content:
             plain/text:
               schema:
-                type: string
+                type: array
+                items:
+                  $ref: '#/components/schemas/DossierAdmission'
+      operationId: get-dossieradmission
+      description: Rechercher des dossiers d'admission.
   /admission/candidats/etudesanterieures/etablissementsenseignementfrequentes:
     parameters: []
     get:
@@ -300,4 +304,19 @@ components:
       required:
         - nomEtablissementEnseignement
         - codePays
+    DossierAdmission:
+      title: DossierAdmission
+      x-stoplight:
+        id: np32sdh9pufxt
+      type: object
+      properties:
+        idDossierAdmission:
+          type: string
+          x-stoplight:
+            id: 4k1179ymeyk7v
+          format: uuid
+        ni:
+          type: string
+          x-stoplight:
+            id: fjrtz5a50sgxj
   securitySchemes: {}
