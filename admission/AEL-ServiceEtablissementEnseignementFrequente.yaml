@@ -238,6 +238,7 @@ paths:
     parameters:
       - schema:
           type: string
+          format: uuid
         name: iddossieradmission
         in: path
         required: true
