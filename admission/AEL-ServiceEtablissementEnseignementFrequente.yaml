@@ -217,6 +217,21 @@ paths:
                 - nomEtablissementEnseignement
                 - codePays
         description: Les informations nécessaires pour la création.
+    get:
+      summary: ''
+      operationId: get-admission-etablissementenseignement
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EtablissementEnseignement'
+      description: Rechercher des établissements d'enseignement.
 components:
   schemas:
     EtablissementEnseignementFrequente:
@@ -242,63 +257,7 @@ components:
           format: uuid
           description: Identifiant du dossier d'admission.
         choixEtablissementEnseignement:
-          type: object
-          x-stoplight:
-            id: ltwgm0gh74v2p
-          description: |-
-            Définition d'un etablissement d'enseignement fournit par le candidat à l'admission.
-
-            Le choix représente :
-            - soit un établissement d'enseignement définit dans la système de gestion des études
-            - soit une description de l'établissement d'enseignement fournie par le candidat à l'admission
-
-            Lorsque le code de l'établissement est présent, tous les autres champs doivent être absents.
-
-            Lorsque le nom de l'établissement est présent, 
-            le code de l'établissement doit être absent.
-
-
-            Le code de pays est obligatoire.
-            Le code de la province ou état est optionnel.
-            L'indicateur d'établissement de niveau universitare est obligatoire.
-          required:
-            - idEtablissement
-            - nomEtablissementEnseignement
-            - codePays
-            - estEtablissementUniversitaire
-          properties:
-            idEtablissement:
-              type: string
-              x-stoplight:
-                id: iywo5fc1z5gre
-              format: uuid
-              description: L'identifiant de l'établissement dans SET
-            nomEtablissementEnseignement:
-              type: string
-              x-stoplight:
-                id: fsat9pm7s70em
-              description: Nom de l'établissement d'enseignement
-              example: Universté Sherbrooke
-            codePays:
-              type: string
-              x-stoplight:
-                id: n2yidob65tleg
-              description: Code de pays du RIC
-              minLength: 3
-              maxLength: 3
-            codeProvinceEtat:
-              type: string
-              x-stoplight:
-                id: ph5xz8djo952v
-              minLength: 2
-              maxLength: 2
-              description: Code de la province ou état du RIC
-            estEtablissementUniversitaire:
-              type: boolean
-              x-stoplight:
-                id: g2adz9rszlqwz
-              description: Si l'établissement est de niveau universitaire
-              readOnly: true
+          $ref: '#/components/schemas/EtablissementEnseignement'
         idsFormationsSuivies:
           type: array
           x-stoplight:
