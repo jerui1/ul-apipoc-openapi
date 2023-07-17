@@ -268,6 +268,18 @@ paths:
                   format: uuid
               required:
                 - idEtablissementEnseignement
+  /person:
+    get:
+      summary: Obtenir une personne
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Person.yaml
+      operationId: get-person
 components:
   schemas:
     EtablissementEnseignementFrequente:
