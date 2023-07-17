@@ -1,0 +1,9 @@
+title: Person
+x-stoplight:
+  id: 42wsfn0wffzm5
+type: object
+properties:
+  id:
+    type: string
+    x-stoplight:
+      id: 05adhug2jbulf
